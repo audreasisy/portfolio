@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automation &amp; Operations Portfolio</title>
+<style>
+  :root{
+    --bg:#f6f6f8; --surface:#ffffff; --ink:#181a22; --muted:#565a68;
+    --line:#e6e5ec; --accent:#44506b; --accent-soft:#eaecf2; --chip:#eeedf3;
+    --radius:16px; --maxw:860px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#111218; --surface:#1a1c26; --ink:#ececf2; --muted:#a2a4b4;
+      --line:#2a2c3a; --accent:#9aa6c4; --accent-soft:#20222f; --chip:#232532;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65; font-size:17px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  a{color:var(--accent); text-decoration:none}
+
+  header.hero{padding:72px 0 44px; border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 16px}
+  h1{font-size:2.35rem; line-height:1.18; margin:0 0 18px; letter-spacing:-.015em; max-width:20ch}
+  .lede{font-size:1.18rem; color:var(--muted); margin:0; max-width:60ch}
+
+  main{padding:40px 0 20px}
+  .sec-label{font-size:.76rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 20px}
+
+  .card{
+    --ca:var(--accent); --ca-soft:var(--accent-soft);
+    display:block; background:var(--surface); border:1px solid var(--line);
+    border-left:5px solid var(--ca); border-radius:var(--radius);
+    padding:26px 28px; margin:0 0 20px; color:inherit;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  }
+  a.card:hover{transform:translateY(-3px); box-shadow:0 12px 30px -14px rgba(20,22,40,.28); text-decoration:none}
+  .card.pocm{--ca:#2f6f5e; --ca-soft:#e8f1ee}
+  .card.hiredesk{--ca:#5145b3; --ca-soft:#ecebf8}
+  @media (prefers-color-scheme: dark){
+    .card.pocm{--ca:#6fbfa6; --ca-soft:#1e2a26}
+    .card.hiredesk{--ca:#a99df2; --ca-soft:#221f3a}
+  }
+  .card .top{display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap}
+  .card .ic{width:40px; height:40px; flex:none; border-radius:10px; background:var(--ca-soft);
+    display:flex; align-items:center; justify-content:center; font-size:1.25rem}
+  .card h2{font-size:1.35rem; margin:0; letter-spacing:-.01em; flex:1; min-width:200px}
+  .status{font-size:.7rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    padding:4px 10px; border-radius:999px; white-space:nowrap}
+  .status.live{background:var(--ca); color:#fff}
+  .status.soon{background:var(--chip); color:var(--muted); border:1px solid var(--line)}
+  .card .role{font-size:.82rem; color:var(--ca); font-weight:700; margin:0 0 10px}
+  .card p{margin:0 0 16px; color:var(--muted)}
+  .card p b{color:var(--ink)}
+  .card .chips{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px}
+  .card .chip{background:var(--chip); border:1px solid var(--line); color:var(--ink);
+    font-size:.78rem; padding:4px 11px; border-radius:999px; font-weight:500}
+  .card .cta{font-weight:700; color:var(--ca); font-size:.95rem}
+  .card.soon{border-left-color:var(--line); opacity:.85}
+  .card.soon .cta{color:var(--muted)}
+
+  footer{padding:36px 0 72px; color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); margin-top:24px}
+
+  @media (max-width:640px){
+    body{font-size:16px}
+    h1{font-size:1.8rem}
+    header.hero{padding:52px 0 34px}
+    .card{padding:22px 20px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Portfolio · Automation &amp; Operations</p>
+    <h1>Operations systems I've designed and built.</h1>
+    <p class="lede">I turn manual, error-prone back-office work into reliable one-click systems — scoping the problem, designing the data model, building the automation, and documenting it for handover. Here are a few, each written up as a short case study.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="sec-label">Case studies</p>
+
+    <a class="card hiredesk" href="hiredesk.html">
+      <div class="top">
+        <span class="ic">💼</span>
+        <h2>HireDesk — Recruitment Automation</h2>
+        <span class="status live">Live</span>
+      </div>
+      <p class="role">Project owner — design, architecture, build &amp; delivery</p>
+      <p>An end-to-end recruitment system that carries a role from <b>"we need to hire" to a signed probation contract</b> — kickoff, CV intake, every candidate email, offers, and bilingual contracts — built entirely on Google Workspace + Slack, with no paid tools. A two-store architecture lets every new role inherit the full automation for free.</p>
+      <div class="chips">
+        <span class="chip">Google Apps Script</span>
+        <span class="chip">Sheets</span>
+        <span class="chip">Gmail</span>
+        <span class="chip">Drive &amp; Docs</span>
+        <span class="chip">Calendar</span>
+        <span class="chip">Slack</span>
+      </div>
+      <span class="cta">View case study →</span>
+    </a>
+
+    <a class="card pocm" href="pocm.html">
+      <div class="top">
+        <span class="ic">📄</span>
+        <h2>Document Automation — PO &amp; Completion Minutes</h2>
+        <span class="status live">Live</span>
+      </div>
+      <p class="role">Project owner — design, build &amp; delivery</p>
+      <p>One-click generation of <b>bilingual client contracts</b> — Purchase Orders and Completion Minutes — from a single source-of-truth workbook. Derives every financial figure from one dataset and files each order in its own Drive folder, cutting <b>25–50 minutes of manual prep per order to a single click</b>.</p>
+      <div class="chips">
+        <span class="chip">Google Sheets</span>
+        <span class="chip">Google Apps Script</span>
+        <span class="chip">Docs API</span>
+        <span class="chip">Drive API</span>
+      </div>
+      <span class="cta">View case study →</span>
+    </a>
+
+    <div class="card soon">
+      <div class="top">
+        <span class="ic">💸</span>
+        <h2>Cash Flow Automation</h2>
+        <span class="status soon">Coming soon</span>
+      </div>
+      <p class="role">Project owner — design &amp; build</p>
+      <p>A finance-operations automation — case study in progress.</p>
+      <span class="cta">Write-up coming soon</span>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Built and maintained by the systems' owner · case studies use sanitized demo data only.
+  </div>
+</footer>
+
+</body>
+</html>
