@@ -81,8 +81,8 @@
   .fstage .fn{width:34px; height:34px; flex:none; border-radius:8px; background:var(--accent-soft);
     color:var(--accent); font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center}
   .fstage .ft{min-width:0}
-  .fstage .ft .fnm{font-weight:700; font-size:.92rem; color:var(--ink)}
-  .fstage .ft .fds{font-size:.8rem; color:var(--muted)}
+  .fstage .ft .fnm{display:block; font-weight:700; font-size:.92rem; color:var(--ink); margin-bottom:2px}
+  .fstage .ft .fds{display:block; font-size:.8rem; color:var(--muted); line-height:1.45}
   .tag{flex:none; font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
     padding:4px 9px; border-radius:999px; white-space:nowrap}
   .tag.auto{background:var(--accent); color:#fff}
@@ -139,7 +139,7 @@
   .tmap td .fail{color:var(--muted); font-weight:700}
   .tmap-wrap{overflow-x:auto; margin:6px 0 4px}
 
-  .impact-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:8px 0 24px}
+  .impact-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:8px 0 24px}
   .stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px}
   .stat .big{font-size:1.7rem; font-weight:700; color:var(--accent); line-height:1.1}
   .stat .big.ph{color:var(--ph); font-size:1.3rem; font-style:italic; font-weight:600}
@@ -381,14 +381,13 @@
     <div class="impact-grid">
       <div class="stat"><div class="big">7-stage funnel</div><div class="lbl">connective work automated end-to-end — kickoff to signed contract</div></div>
       <div class="stat"><div class="big">1 click</div><div class="lbl">provisions a new role · generates an offer · generates the contract + NDA</div></div>
-      <div class="stat"><div class="big ph">to confirm</div><div class="lbl">hours saved per week · roles &amp; candidates processed</div></div>
     </div>
     <ul>
       <li><b>Removes whole classes of error by design</b> — automatic salary and probation math eliminates arithmetic mistakes; the dedupe engine prevents duplicate or forgotten emails; required-field and exact-match guards stop malformed sends; and a folder-provisioning fix I built removed a recurring "document saved to the wrong place" failure.</li>
       <li><b>Scales without extra effort</b> — every role's tracker inherits the full automation from one template, so a new opening costs a single kickoff click rather than a fresh manual setup.</li>
       <li><b>Makes the pipeline visible and transferable</b> — a live company-wide view of every candidate, plus a no-code operating guide I wrote so colleagues can run the system themselves.</li>
     </ul>
-    <div class="confid"><b>Metrics to be added:</b> the build records document what was built and tested, but not measured before/after cycle times or volumes — so no numbers are estimated here. Real figures (hours saved, roles and candidates run through HireDesk, time-to-first-response) will replace the placeholder above once confirmed.</div>
+    <div class="confid">Impact here is stated structurally rather than with invented figures — every point above is inherent to how the system is built. Measured before/after numbers can be added once confirmed.</div>
   </section>
 
   <section>
