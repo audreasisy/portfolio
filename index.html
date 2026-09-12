@@ -44,9 +44,11 @@
   a.card:hover{transform:translateY(-3px); box-shadow:0 12px 30px -14px rgba(20,22,40,.28); text-decoration:none}
   .card.pocm{--ca:#2f6f5e; --ca-soft:#e8f1ee}
   .card.hiredesk{--ca:#5145b3; --ca-soft:#ecebf8}
+  .card.cashflow{--ca:#a8345f; --ca-soft:#fbe9ef}
   @media (prefers-color-scheme: dark){
     .card.pocm{--ca:#6fbfa6; --ca-soft:#1e2a26}
     .card.hiredesk{--ca:#a99df2; --ca-soft:#221f3a}
+    .card.cashflow{--ca:#f08fb0; --ca-soft:#3a1f2a}
   }
   .card .top{display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap}
   .card .ic{width:40px; height:40px; flex:none; border-radius:10px; background:var(--ca-soft);
@@ -126,16 +128,22 @@
       <span class="cta">View case study →</span>
     </a>
 
-    <div class="card soon">
+    <a class="card cashflow" href="cashflow.html">
       <div class="top">
-        <span class="ic">💸</span>
-        <h2>Cash Flow Automation</h2>
-        <span class="status soon">Coming soon</span>
+        <span class="ic">📊</span>
+        <h2>Cash Flow Forecast Automation</h2>
+        <span class="status live">Built · in validation</span>
       </div>
-      <p class="role">Project owner — design &amp; build</p>
-      <p>A finance-operations automation — case study in progress.</p>
-      <span class="cta">Write-up coming soon</span>
-    </div>
+      <p class="role">Project owner — scoping, design, build &amp; handover</p>
+      <p>A live <b>weekly cash-flow forecast</b> that pulls booked deals, confirmed receipts, recurring expenses and project payouts straight from the files teams already keep — nobody retypes a number. Moved the company from a <b>hand-typed monthly sheet to a weekly, multi-year view</b> that shows the week the balance dips, with confirmed receipts reconciled against estimates automatically.</p>
+      <div class="chips">
+        <span class="chip">Google Sheets</span>
+        <span class="chip">Google Apps Script</span>
+        <span class="chip">IMPORTRANGE</span>
+        <span class="chip">Multi-file architecture</span>
+      </div>
+      <span class="cta">View case study →</span>
+    </a>
   </div>
 </main>
 
