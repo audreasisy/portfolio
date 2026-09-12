@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cash Flow Forecast Automation — Weekly Cash Position | Nguyen Ai Ngoc</title>
+<style>
+  :root{
+    --bg:#f6f7fa; --surface:#ffffff; --ink:#181b24; --muted:#585d6b;
+    --line:#e4e6ee; --accent:#a8345f; --accent-soft:#fbe9ef; --chip:#edf0f6;
+    --est:#b7791f; --est-soft:#fbf1dc;
+    --ph:#8a8a94; --ph-bg:#f9fafd; --ph-line:#cdd2e0;
+    --radius:14px; --maxw:820px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#121420; --surface:#1b1e2c; --ink:#eaecf5; --muted:#a3a7b8;
+      --line:#2c3042; --accent:#f08fb0; --accent-soft:#3a1f2a; --chip:#252a3a;
+      --est:#e2b25a; --est-soft:#3a3020;
+      --ph:#8b8ca0; --ph-bg:#171926; --ph-line:#383c52;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65; font-size:17px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; font-size:.9em;
+    background:var(--chip); border:1px solid var(--line); border-radius:5px; padding:1px 6px}
+
+  header.hero{padding:64px 0 40px; border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600; margin:0 0 14px}
+  h1{font-size:2.15rem; line-height:1.2; margin:0 0 16px; letter-spacing:-.01em}
+  .lede{font-size:1.18rem; color:var(--muted); margin:0 0 28px; max-width:64ch}
+  .meta{display:flex; flex-wrap:wrap; gap:24px; font-size:.95rem; margin:0 0 22px}
+  .meta div{min-width:120px}
+  .meta .k{color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; margin-bottom:2px}
+  .meta .v{font-weight:600}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{background:var(--chip); border:1px solid var(--line); color:var(--ink);
+    font-size:.83rem; padding:5px 12px; border-radius:999px; font-weight:500}
+
+  section{padding:44px 0; border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  h2{font-size:1.4rem; margin:0 0 18px; letter-spacing:-.01em; display:flex; align-items:center; gap:10px}
+  h2 .num{color:var(--accent); font-size:.95rem; font-weight:700; background:var(--accent-soft);
+    width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; flex:none}
+  h3.sub{font-size:1.02rem; margin:26px 0 12px; letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  ul{margin:0 0 16px; padding-left:0; list-style:none}
+  ul li{position:relative; padding-left:26px; margin-bottom:12px}
+  ul li::before{content:""; position:absolute; left:6px; top:11px; width:7px; height:7px;
+    background:var(--accent); border-radius:2px; transform:rotate(45deg)}
+  ul li b, p b, strong{color:var(--ink)}
+  ol.steps{counter-reset:s; padding-left:0; list-style:none; margin:0 0 16px}
+  ol.steps li{counter-increment:s; position:relative; padding-left:44px; margin-bottom:14px}
+  ol.steps li::before{content:counter(s); position:absolute; left:0; top:-2px; width:30px; height:30px;
+    background:var(--accent-soft); color:var(--accent); font-weight:700; border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-size:.9rem}
+
+  .placeholder{border:1.5px dashed var(--ph-line); background:var(--ph-bg); color:var(--ph);
+    border-radius:var(--radius); padding:26px; text-align:center; margin:20px 0; font-size:.92rem}
+  .placeholder .tag{display:inline-block; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    font-size:.72rem; color:var(--accent); margin-bottom:6px}
+  .placeholder.video{padding:40px 26px}
+
+  /* ── hero: sources → hub → weekly forecast ── */
+  .flow{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px}
+  .flow .fl-label{font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 14px}
+  .sources{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+  .src{background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:grid;
+    grid-template-columns:1fr auto; gap:10px; align-items:start}
+  .src .sn{display:block; font-weight:700; font-size:.9rem; color:var(--ink)}
+  .src .sd{display:block; font-size:.78rem; color:var(--muted); line-height:1.45; margin-top:2px}
+  .src .owner{font-size:.7rem; color:var(--muted); font-weight:600; white-space:nowrap}
+  .tag{font-size:.7rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase;
+    padding:3px 8px; border-radius:999px; white-space:nowrap; display:inline-block; margin-top:6px}
+  .tag.live{background:var(--accent); color:#fff}
+  .tag.once{background:var(--chip); color:var(--muted); border:1px solid var(--line)}
+  .tag.est{background:var(--est-soft); color:var(--est); border:1px solid var(--est)}
+  .arrow{text-align:center; color:var(--muted); font-size:.8rem; font-weight:600; margin:12px 0}
+  .arrow b{color:var(--ink)}
+  .hub{background:var(--accent-soft); border:1px solid var(--line); border-radius:10px; padding:14px 16px}
+  .hub .ht{font-weight:800; font-size:.95rem; color:var(--ink); margin-bottom:4px}
+  .hub .hs{font-size:.8rem; color:var(--muted); margin-bottom:10px}
+  .weeks{display:grid; grid-template-columns:repeat(6,1fr); gap:6px}
+  .wk{background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:8px 4px; text-align:center}
+  .wk .wl{display:block; font-size:.66rem; color:var(--muted); font-weight:700; letter-spacing:.02em}
+  .wk .wb{display:block; height:6px; border-radius:3px; background:var(--accent); margin:7px auto 0; opacity:.9}
+  .wk.neg{border-color:#c0392b; background:#fdf1ef}
+  .wk.neg .wb{background:#c0392b}
+  .wk.neg .wl{color:#c0392b}
+  @media (prefers-color-scheme: dark){ .wk.neg{background:#3a2220} }
+  .wk.est .wb{background:var(--est)}
+  .wk.est .wl{color:var(--est)}
+  .fl-legend{display:flex; gap:16px; margin-top:14px; font-size:.78rem; color:var(--muted); flex-wrap:wrap}
+  .fl-legend span{display:inline-flex; align-items:center; gap:7px}
+  .fl-legend i{width:11px; height:11px; border-radius:3px; display:inline-block}
+  .fl-legend i.a{background:var(--accent)}
+  .fl-legend i.n{background:#c0392b}
+  .fl-legend i.e{background:var(--est)}
+  .da-caption{font-size:.86rem; color:var(--muted); margin:14px 0 0; text-align:center}
+
+  /* ── colour key ── */
+  .key{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 4px}
+  .key span{font-size:.8rem; padding:4px 10px; border-radius:6px; border:1px solid var(--line); background:var(--surface); color:var(--ink)}
+  .key span i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:7px; vertical-align:-1px}
+
+  /* ── timing cases table ── */
+  .tmap{width:100%; border-collapse:collapse; font-size:.84rem; margin:6px 0 4px;
+    border:1px solid var(--line); border-radius:10px; overflow:hidden}
+  .tmap th{background:var(--chip); color:var(--ink); text-align:left; font-weight:700;
+    padding:9px 12px; border-bottom:1px solid var(--line); font-size:.78rem;
+    text-transform:uppercase; letter-spacing:.04em}
+  .tmap td{padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink)}
+  .tmap tr:last-child td{border-bottom:none}
+  .tmap td .col{display:inline-block; min-width:22px; text-align:center; font-weight:800;
+    color:var(--accent); background:var(--accent-soft); border-radius:6px; padding:1px 6px; font-size:.8rem}
+  .tmap-wrap{overflow-x:auto; margin:6px 0 4px}
+
+  .impact-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:8px 0 24px}
+  .stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px}
+  .stat .big{font-size:1.7rem; font-weight:700; color:var(--accent); line-height:1.1}
+  .stat .lbl{font-size:.86rem; color:var(--muted); margin-top:6px}
+
+  .callout{background:var(--accent-soft); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:10px; padding:18px 20px; margin:8px 0 0; font-size:.98rem}
+  .confid{background:var(--ph-bg); border:1px solid var(--ph-line); border-radius:10px;
+    padding:14px 18px; margin:18px 0 0; font-size:.86rem; color:var(--muted)}
+  .confid b{color:var(--ink)}
+  footer{padding:40px 0 70px; color:var(--muted); font-size:.92rem}
+  .backlink{display:inline-block; margin-top:10px; font-weight:600}
+
+  .code-panel{background:#1d2230; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin:20px 0}
+  .code-panel .cp-bar{background:#161a26; color:#9aa4b2; font-size:.74rem; padding:8px 14px;
+    border-bottom:1px solid rgba(255,255,255,.08); letter-spacing:.02em;
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace}
+  .code-panel pre{margin:0; padding:14px 16px; overflow-x:auto; font-size:12.5px; line-height:1.6;
+    font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; color:#e6e9ef}
+  .code-panel code{white-space:pre; background:none; border:none; padding:0; font-size:inherit}
+  .code-panel .cm{color:#7f8aa0; font-style:italic}
+  .code-panel .kw{color:#ffa3c2}
+  .code-panel .st{color:#9ae6b4}
+  figure.shot{margin:20px 0}
+  figure.shot img{width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:var(--radius)}
+  figure.shot figcaption{font-size:.82rem; color:var(--muted); margin-top:8px; text-align:center}
+
+  @media (max-width:680px){
+    .sources{grid-template-columns:1fr}
+    .weeks{grid-template-columns:repeat(3,1fr)}
+    .impact-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:640px){
+    body{font-size:16px}
+    h1{font-size:1.7rem}
+    header.hero{padding:48px 0 32px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Case Study · Automation</p>
+    <h1>Cash Flow Forecast Automation — Weekly Cash Position</h1>
+    <p class="lede">A live, weekly cash-flow forecast that pulls its inputs from the files teams already maintain — booked deals, confirmed receipts, recurring expenses, project payouts — so nobody retypes a number, and the company can see the week its balance dips, not just the month.</p>
+    <div class="meta">
+      <div><div class="k">My role</div><div class="v">Project owner — scoping, design, build, documentation &amp; handover</div></div>
+      <div><div class="k">Timeline</div><div class="v">08/2026 – 09/2026</div></div>
+      <div><div class="k">Status</div><div class="v">Built &amp; live-wired · in validation before official weekly use</div></div>
+    </div>
+    <div class="chips">
+      <span class="chip">Google Sheets (multi-file)</span>
+      <span class="chip">Google Apps Script (JavaScript)</span>
+      <span class="chip">IMPORTRANGE · SUMIFS · WORKDAY</span>
+      <span class="chip">Google Docs</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="flow" role="img" aria-label="Architecture: four source files — the sales tracker, the completion-minute register, an expense rule table and the manager's payout file — feed one forecast hub by read-only pulls. The hub sums everything by pay date into one row per ISO week, with a negative-balance week flagged and estimate weeks shown in amber.">
+      <p class="fl-label">How the forecast is fed · sources → hub → one row per week</p>
+      <div class="sources">
+        <div class="src">
+          <span><span class="sn">Sales tracker</span><span class="sd">Booked deals → income, timed by the client's case · unsigned deals → estimate layer</span></span>
+          <span><span class="owner">Sales team</span><br><span class="tag live">Pulled live</span></span>
+        </div>
+        <div class="src">
+          <span><span class="sn">Completion-minute register</span><span class="sd">Real receipts → confirmed layer, netted against estimates by Order ID</span></span>
+          <span><span class="owner">Admin / docs</span><br><span class="tag live">Pulled live</span></span>
+        </div>
+        <div class="src">
+          <span><span class="sn">Expense rule table</span><span class="sd">Standard amount + pay-month offset + pay day per category; every month's rows are formulas</span></span>
+          <span><span class="owner">Accountant</span><br><span class="tag once">Typed once</span></span>
+        </div>
+        <div class="src">
+          <span><span class="sn">Manager's payout file</span><span class="sd">One row per project payment; a separate file, so the manager never sees the forecast</span></span>
+          <span><span class="owner">Client Success</span><br><span class="tag live">Pulled live</span></span>
+        </div>
+      </div>
+      <div class="arrow">▼ read-only pulls into the hub · <b>the hub holds no data of its own</b> · SUMIFS by pay date within each week</div>
+      <div class="hub">
+        <div class="ht">📊 Weekly Forecast <span style="font-weight:600;color:var(--muted);font-size:.8rem">· opening → in → out → closing</span></div>
+        <div class="hs">One row per ISO week on a multi-year grid · negative weeks alerted · unsigned deals in amber</div>
+        <div class="weeks">
+          <div class="wk"><span class="wl">W36</span><span class="wb" style="width:70%"></span></div>
+          <div class="wk"><span class="wl">W37</span><span class="wb" style="width:55%"></span></div>
+          <div class="wk neg"><span class="wl">W38 ⚠</span><span class="wb" style="width:35%"></span></div>
+          <div class="wk neg"><span class="wl">W39 ⚠</span><span class="wb" style="width:25%"></span></div>
+          <div class="wk"><span class="wl">W40</span><span class="wb" style="width:80%"></span></div>
+          <div class="wk est"><span class="wl">W41 est</span><span class="wb" style="width:60%"></span></div>
+        </div>
+      </div>
+      <div class="fl-legend">
+        <span><i class="a"></i> Closing balance</span>
+        <span><i class="n"></i> Negative-balance week, flagged</span>
+        <span><i class="e"></i> Includes unsigned-deal estimate</span>
+      </div>
+    </div>
+    <p class="da-caption">Illustrative architecture and bar heights — no real weeks, clients or balances.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">1</span>The problem</h2>
+    <p>The company — the Vietnam office of a Japan-headquartered marketing group — moves cash in <b>large, lumpy amounts</b>. Clients pay on 30–90-day terms; KOL and vendor payouts, payroll, tax and intra-group repayments go out on their own schedules. The forecast tracking all of this was <b>one Google Sheet, updated monthly, by hand</b>, by the Chief Accountant and me:</p>
+    <ul>
+      <li><b>every figure was typed</b> — income lines copied from the sales team's deal tracker, recurring expenses re-entered each month, project payouts collected from the Client Success Manager and re-keyed;</li>
+      <li>the view was <b>monthly</b>, because the sales tracker records the month revenue is booked, not the week the cash lands — so an <b>intra-month negative-balance week was invisible</b>;</li>
+      <li>income timing was judged by hand per deal, so payment weeks drifted between updates;</li>
+      <li>the Client Success Manager had <b>no place to enter project payouts</b> — a hidden or protected tab in the finance file would still have exposed the whole forecast.</li>
+    </ul>
+    <p>The Director's brief: a <b>weekly</b> view of cash in, cash out and end-of-week balance for the next six months, refreshed with minimal typing, rough-but-honest (every guess labelled <i>Estimate</i>), with a safe input channel for project payouts.</p>
+  </section>
+
+  <section>
+    <h2><span class="num">2</span>What I built</h2>
+    <p>A <b>hub-and-sources architecture</b>: one forecast hub that holds no data of its own and pulls everything, read-only, from the files the owning teams already keep — using only Google Sheets and Apps Script, with <b>no add-ons, external tools or paid services</b>.</p>
+    <ol class="steps">
+      <li><b>Booked income pulls live</b> from the sales tracker. Cash = revenue × (1 + VAT); the payment deadline is derived from the client's timing case; the row lands automatically in the ISO week it's due.</li>
+      <li><b>Confirmed receipts pull live</b> from the completion-minute register and are <b>netted against the estimate for the same Order ID</b> — a deal moves from its estimated week to its actual week without ever being double-counted.</li>
+      <li><b>Unsigned deals</b> ranked A (90 %) / B (80 %) feed a separate <i>Estimate</i> layer, shown in amber columns so they never contaminate confirmed numbers.</li>
+      <li><b>Recurring expenses are typed once</b> — standard amounts and pay rules (which month, which day) in a rule table; every month's rows are formulas.</li>
+      <li><b>Project payouts</b> are entered by the Client Success Manager, one row per payment, in <b>their own file</b>, which the hub mirrors read-only.</li>
+      <li><b>The weekly engine</b> builds one row per ISO week from 08/2026 to 12/2028 — opening → in → out → closing — with a negative-balance alert and a "lowest weekly closing" line, all on <code>SUMIFS</code> by pay date.</li>
+    </ol>
+    <p>Users type only the blue cells — case overrides, real invoice dates, <i>Received?</i>, the day's FX rate, one-off expenses. Everything else is a formula or a live pull, following one colour key on every tab:</p>
+    <div class="key">
+      <span><i style="background:#2b6cd6"></i>blue = you type</span>
+      <span><i style="background:#333"></i>black = formula</span>
+      <span><i style="background:#2e9e5b"></i>green = pulled live</span>
+      <span><i style="background:#e8c31d"></i>yellow = still to fill</span>
+      <span><i style="background:#d9902b"></i>amber = estimate</span>
+    </div>
+
+    <div class="placeholder">
+      <span class="tag">Screenshot</span><br>
+      Tab 2 <b>Weekly Forecast</b> — the closing-balance column with a negative-week alert and the "lowest weekly closing" line. <i>Sanitized demo data.</i>
+    </div>
+    <div class="placeholder">
+      <span class="tag">Screenshot</span><br>
+      Tab 3 <b>INCOME</b> — blue (type) vs black (auto) columns, the case dropdown, and the "Lands in" ISO week. <i>Sanitized demo data.</i>
+    </div>
+    <div class="placeholder video">
+      <span class="tag">Demo video</span><br>
+      30–60s: add a fake deal to the sales tracker → it appears in INCOME with its case, deadline and week → the weekly closing balance moves. <i>Sanitized demo copy only.</i>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="num">3</span>Key design decisions</h2>
+    <ul>
+      <li><b>A separate file is the only real access boundary.</b> Sheets' hidden and protected tabs can still be viewed, so project payouts live in the Manager's own file and enter the hub through a read-only <code>IMPORTRANGE</code>. Access control by architecture, not by tab permissions.</li>
+      <li><b>One-way pulls; the hub owns nothing.</b> Each source stays the single source of truth for the team that maintains it. Nothing is copied or retyped, so the forecast cannot go stale relative to its inputs.</li>
+      <li><b>Rule-based income timing, overridable per row.</b> Three client timing cases, with the default resolved from a client → case lookup table. Nothing client-specific is hard-coded in a formula — an early version did that and was replaced.</li>
+      <li><b>Hybrid forecast, not a switch to the completion register.</b> The first instinct was to forecast from confirmed completion minutes alone, but a completion log can never populate the next six months. I kept the sales tracker as the forward estimate and overlaid confirmed receipts on it, netted by a <b>shared Order ID</b> stamped on every deal and confirmation — the forecast stays whole and sharpens itself as money lands.</li>
+      <li><b>Real ISO weeks on a multi-year grid.</b> Rejected a fixed "W1–W26" block anchored to launch. Labels use a Thursday-of-week formula so they are year-safe (<code>2026-W53</code> → <code>2027-W01</code>) on every Sheets/Excel version; the engine matches by date, so labels are cosmetic.</li>
+      <li><b>Estimates stay honest.</b> Native currency is kept and converted at viewing time with a typed bank rate and its "as of" date, because the rate at signing is not the rate when money lands. Every constant — VAT rate, opening balance — lives in one config cell.</li>
+      <li><b>Every structural change is a script, not a browser edit.</b> Seven idempotent Apps Script routines wire the pulls, set up dropdowns and header tags, extend the grid, build the confirmed layer and activate netting. Each snapshots the tab it touches, refuses to run if a tab is missing, and — for netting — aborts if the target formula isn't the exact <code>SUMIFS</code> it expects.</li>
+    </ul>
+
+    <h3 class="sub">The income-timing cases</h3>
+    <p>Each client defaults to one case from a lookup table; any row can be overridden in a blue cell:</p>
+    <div class="tmap-wrap">
+      <table class="tmap">
+        <thead><tr><th>Case</th><th>Payment deadline</th><th>Typical use</th></tr></thead>
+        <tbody>
+          <tr><td><span class="col">TH1</span></td><td><code>WORKDAY(invoice, 30)</code> — 30 working days</td><td>Standard terms</td></tr>
+          <tr><td><span class="col">TH2</span></td><td>A fixed date agreed with the client</td><td>Negotiated schedules</td></tr>
+          <tr><td><span class="col">TH3</span></td><td>25th of the 3rd month from invoice, capped at 90 days</td><td>Long-cycle clients</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <figure class="shot">
+      <div class="code-panel">
+        <div class="cp-bar">3. INCOME · netted-cash column (per Order ID)</div>
+<pre><code><span class="cm">// A confirmed receipt reduces the estimate it belongs to — never both counted.</span>
+<span class="cm">// confirmed-to-date and order-estimate-total are both keyed on the shared Order ID.</span>
+Cash netted = Cash × MAX(0, 1 − confirmed_to_date ÷ order_estimate_total)
+
+<span class="cm">// Weekly IN = Σ netted estimates landing this week  +  Σ confirmed receipts dated this week</span>
+IN Income = SUMIFS(netted, week, this_week) + SUMIFS(confirmed, week, this_week)
+
+<span class="cm">// Undated confirmations contribute nothing until a real date is typed.</span></code></pre>
+      </div>
+      <figcaption>The estimate ⇄ confirmed netting model. Verified on the first keyed deal: totals unchanged, the amount moved from its estimated week to its actual week, no double count.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2><span class="num">4</span>Impact</h2>
+    <div class="impact-grid">
+      <div class="stat"><div class="big">Monthly → weekly</div><div class="lbl">forecast granularity, on a rolling multi-year horizon instead of one hand-maintained month</div></div>
+      <div class="stat"><div class="big">3 of 4 inputs</div><div class="lbl">no longer retyped — booked income, unsigned-deal forecast and project payouts pull live; expenses auto-fill from rules</div></div>
+      <div class="stat"><div class="big">0 double counts</div><div class="lbl">confirmed receipts reconcile against estimates automatically by Order ID</div></div>
+    </div>
+    <ul>
+      <li><b>Exposed a hidden cash gap</b> — on live data, the weekly view revealed a multi-week negative-balance stretch that the old monthly sheet could not show.</li>
+      <li><b>A safe input channel</b> for the Client Success Manager, with zero visibility of the forecast.</li>
+      <li><b>Overdue receipts flag themselves</b> — a row shows "⚠ OVERDUE – unconfirmed" once its deadline passes without a receipt.</li>
+      <li><b>Maintainable without me</b> — a tab-by-tab user guide, formula pack, per-script runbooks, a connection-map diagram and dated handovers.</li>
+    </ul>
+    <div class="confid">Impact is stated structurally — every point above is inherent to how the system is built. Measured before/after figures (hours per monthly update, volumes handled) will be added once logged after go-live.</div>
+  </section>
+
+  <section>
+    <h2><span class="num">5</span>What I owned end-to-end</h2>
+    <p>I <b>scoped</b> the brief with the Director (requester) and the Chief Accountant (data owner) and set the milestones. I <b>designed</b> the multi-file architecture, the three timing cases, the expense-rule table, the ISO-week calendar and the estimate/confirmed netting model — including the analysis that rejected a full switch to the completion register. I <b>built</b> the live system and its seven Apps Script routines, ran and verified every deployment against backups, and <b>documented</b> it end to end, including a Director walkthrough deck.</p>
+    <p>Along the way I <b>found and fixed a real-world failure</b> — a header-detection routine that matched an intro sentence containing "pay date" and "week" instead of the actual header, corrupting the Manager file — and turned it into a rule (detection must ignore long prose cells). I also documented the <code>IMPORTRANGE</code> authorisation gotcha that <code>IFERROR</code> silently hides, with its fix, in the runbook.</p>
+    <p>Two ideas came from stakeholders: the Director asked for the unsigned-deal forecast, and the Chief Accountant's observation about phase payments led me to design the confirmed-receipt layer.</p>
+    <p>The build used an <b>AI-assisted, pair-programming workflow</b> — I directed an AI coding assistant to my design and spec for formulas, scripts and documentation, then reviewed, ran, tested and debugged everything in the live files. The requirements, architecture and design decisions are mine. No vendor or contractor was involved.</p>
+    <div class="callout">
+      Want a closer look? Ask me for a walkthrough — I can share a <b>sanitized demo copy</b> with fake deals, clients and balances that you can run yourself.
+    </div>
+  </section>
+
+  <footer>
+    <a class="backlink" href="./">← All projects</a>
+  </footer>
+
+</div>
+</body>
+</html>
