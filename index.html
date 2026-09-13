@@ -3,154 +3,391 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Automation &amp; Operations Portfolio</title>
+<title>Nguyen Ai Ngoc — Operations systems, designed and built</title>
+<meta name="description" content="Portfolio of Nguyen Ai Ngoc: hiring, client-document and cash-flow systems, designed and built end to end.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f6f6f8; --surface:#ffffff; --ink:#181a22; --muted:#565a68;
-    --line:#e6e5ec; --accent:#44506b; --accent-soft:#eaecf2; --chip:#eeedf3;
-    --radius:16px; --maxw:860px;
+    --bg:#f3f3f6; --surface:#ffffff; --ink:#14161d; --muted:#5b5f6e;
+    --line:#dcdde6; --line-2:#c9cbd6; --focus:#14161d;
+    --hd:#5145b3; --po:#2f6f5e; --cf:#a8345f;
+    --hd-soft:#ecebf8; --po-soft:#e8f1ee; --cf-soft:#fbe9ef;
+    --display:"Bricolage Grotesque","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    --body:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    --maxw:1120px; --gutter:clamp(20px,4vw,48px);
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#111218; --surface:#1a1c26; --ink:#ececf2; --muted:#a2a4b4;
-      --line:#2a2c3a; --accent:#9aa6c4; --accent-soft:#20222f; --chip:#232532;
+      --bg:#111218; --surface:#191b25; --ink:#ededf3; --muted:#a3a6b6;
+      --line:#2b2d3b; --line-2:#3a3d4e; --focus:#ededf3;
+      --hd:#a99df2; --po:#6fbfa6; --cf:#f08fb0;
+      --hd-soft:#221f3a; --po-soft:#1e2a26; --cf-soft:#3a1f2a;
     }
   }
+
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.65; font-size:17px; -webkit-font-smoothing:antialiased;
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased}
+  a{color:inherit; text-decoration:none}
+  a:focus-visible{outline:2px solid var(--focus); outline-offset:4px; border-radius:2px}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--gutter)}
+  h1,h2,h3{font-family:var(--display); font-weight:700; letter-spacing:-.02em; margin:0}
+  svg{display:block}
+
+  /* nav */
+  .nav{position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:60px}
+  .nav .name{font-family:var(--display); font-weight:700; font-size:1.05rem}
+  .nav ul{display:flex; gap:26px; list-style:none; margin:0; padding:0; font-size:.95rem}
+  .nav li a{padding:6px 0; border-bottom:2px solid transparent}
+  .nav li a:hover{border-bottom-color:var(--ink)}
+
+  /* hero */
+  .hero{min-height:calc(100svh - 60px); display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:40px clamp(32px,5vw,72px); align-items:center; padding:clamp(40px,6vh,72px) 0 clamp(32px,5vh,56px)}
+  .hero h1{font-size:clamp(2.6rem,6.6vw,5.6rem); line-height:.98; letter-spacing:-.035em; max-width:13ch; text-wrap:balance}
+  .hero h1 .soft{color:var(--muted); font-weight:400}
+  .hero .lede{font-size:clamp(1.05rem,1.5vw,1.25rem); color:var(--muted); margin:28px 0 0; max-width:34ch}
+  .hero .who{margin:36px 0 0; font-size:.95rem; line-height:1.5}
+  .hero .who b{display:block; font-family:var(--display); font-size:1.1rem}
+  .hero .who span{color:var(--muted)}
+  .hero .art{width:100%; height:auto; max-width:600px; justify-self:end}
+  .tri{grid-column:1/-1; display:flex; height:6px; border-radius:3px; overflow:hidden; align-self:end}
+  .tri i{flex:1} .tri .hd{background:var(--hd)} .tri .po{background:var(--po)} .tri .cf{background:var(--cf)}
+  @media (prefers-reduced-motion: no-preference){
+    .hero>*{opacity:0; transform:translateY(14px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+    .hero .art{animation-delay:.15s} .tri{animation-delay:.3s; transform:scaleX(.6); transform-origin:left}
+    @keyframes rise{to{opacity:1; transform:none}}
   }
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
-  a{color:var(--accent); text-decoration:none}
 
-  header.hero{padding:72px 0 44px; border-bottom:1px solid var(--line)}
-  .eyebrow{font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 16px}
-  h1{font-size:2.35rem; line-height:1.18; margin:0 0 18px; letter-spacing:-.015em; max-width:20ch}
-  .lede{font-size:1.18rem; color:var(--muted); margin:0; max-width:60ch}
+  /* card illustrations (currentColor = ink; --c = project accent) */
+  .pic{color:var(--ink)}
+  .pic .ln{fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+  .pic .thin{fill:none; stroke:var(--line-2); stroke-width:1.2}
+  .pic .card{fill:var(--surface); stroke:currentColor; stroke-width:1.6}
+  .pic .acc{fill:var(--c)} .pic .acc-ln{fill:none; stroke:var(--c); stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+  .pic .soft{fill:var(--c-soft)}
 
-  main{padding:40px 0 20px}
-  .sec-label{font-size:.76rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; margin:0 0 20px}
-
-  .card{
-    --ca:var(--accent); --ca-soft:var(--accent-soft);
-    display:block; background:var(--surface); border:1px solid var(--line);
-    border-left:5px solid var(--ca); border-radius:var(--radius);
-    padding:26px 28px; margin:0 0 20px; color:inherit;
-    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
-  }
-  a.card:hover{transform:translateY(-3px); box-shadow:0 12px 30px -14px rgba(20,22,40,.28); text-decoration:none}
-  .card.pocm{--ca:#2f6f5e; --ca-soft:#e8f1ee}
-  .card.hiredesk{--ca:#5145b3; --ca-soft:#ecebf8}
-  .card.cashflow{--ca:#a8345f; --ca-soft:#fbe9ef}
+  /* hero: isometric scene */
+  .art{color:var(--ink)}
+  .art .slab.f-t{fill:var(--surface)}
+  .art .slab.f-l{fill:color-mix(in srgb, var(--surface) 82%, var(--ink))}
+  .art .slab.f-r{fill:color-mix(in srgb, var(--surface) 70%, var(--ink))}
+  .art .grid{fill:none; stroke:var(--line); stroke-width:1}
+  .art .flow{fill:none; stroke:var(--muted); stroke-width:1.6; stroke-dasharray:5 6; stroke-linecap:round; opacity:.8}
+  .art .shd-big{fill:var(--ink); opacity:.08} .art .shd{fill:var(--ink); opacity:.13} .art .shd-soft{fill:var(--ink); opacity:.10}
+  .art .hd.f-t{fill:color-mix(in srgb, var(--hd) 62%, white)} .art .hd.f-l{fill:var(--hd)} .art .hd.f-r{fill:color-mix(in srgb, var(--hd) 72%, black)}
+  .art .po.f-t{fill:color-mix(in srgb, var(--po) 62%, white)} .art .po.f-l{fill:var(--po)} .art .po.f-r{fill:color-mix(in srgb, var(--po) 72%, black)}
+  .art .cf.f-t{fill:color-mix(in srgb, var(--cf) 62%, white)} .art .cf.f-l{fill:var(--cf)} .art .cf.f-r{fill:color-mix(in srgb, var(--cf) 72%, black)}
+  .art .bar.f-t{fill:#fff} .art .bar.f-l{fill:color-mix(in srgb, var(--cf) 22%, white)} .art .bar.f-r{fill:color-mix(in srgb, var(--cf) 36%, white)}
+  .art .bar-neg.f-t{fill:color-mix(in srgb, var(--cf) 60%, black)} .art .bar-neg.f-l{fill:color-mix(in srgb, var(--cf) 45%, black)} .art .bar-neg.f-r{fill:color-mix(in srgb, var(--cf) 30%, black)}
+  .art .glyph-face{fill:#fff; opacity:.92}
+  .art .glyph{fill:none; stroke:#14161d; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; opacity:.8}
+  .art .card-face{fill:#fff; stroke:#c9cbd6; stroke-width:1}
+  .art .card-edge{fill:none; stroke:#14161d; stroke-width:1.4}
+  .art .card-ln{fill:none; stroke:#b3b6c4; stroke-width:2; stroke-linecap:round}
+  .art .dot-hd{fill:#5145b3} .art .dot-po{fill:#2f6f5e}
+  .art .pole{fill:none; stroke:#a8345f; stroke-width:2; stroke-linecap:round} .art .flag{fill:#a8345f}
+  .art .check{fill:none; stroke:#fff; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+  .art .btn.f-t{fill:var(--ink)} .art .btn.f-l{fill:color-mix(in srgb, var(--ink) 85%, var(--bg))} .art .btn.f-r{fill:color-mix(in srgb, var(--ink) 80%, black)}
+  .art .cursor{fill:#fff; stroke:#14161d; stroke-width:1.2; stroke-linejoin:round}
   @media (prefers-color-scheme: dark){
-    .card.pocm{--ca:#6fbfa6; --ca-soft:#1e2a26}
-    .card.hiredesk{--ca:#a99df2; --ca-soft:#221f3a}
-    .card.cashflow{--ca:#f08fb0; --ca-soft:#3a1f2a}
+    .art .btn.f-r{fill:color-mix(in srgb, var(--ink) 70%, var(--bg))}
   }
-  .card .top{display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap}
-  .card .ic{width:40px; height:40px; flex:none; border-radius:10px; background:var(--ca-soft);
-    display:flex; align-items:center; justify-content:center; font-size:1.25rem}
-  .card h2{font-size:1.35rem; margin:0; letter-spacing:-.01em; flex:1; min-width:200px}
-  .status{font-size:.7rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
-    padding:4px 10px; border-radius:999px; white-space:nowrap}
-  .status.live{background:var(--ca); color:#fff}
-  .status.soon{background:var(--chip); color:var(--muted); border:1px solid var(--line)}
-  .card .role{font-size:.82rem; color:var(--ca); font-weight:700; margin:0 0 10px}
-  .card p{margin:0 0 16px; color:var(--muted)}
-  .card p b{color:var(--ink)}
-  .card .chips{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px}
-  .card .chip{background:var(--chip); border:1px solid var(--line); color:var(--ink);
-    font-size:.78rem; padding:4px 11px; border-radius:999px; font-weight:500}
-  .card .cta{font-weight:700; color:var(--ca); font-size:.95rem}
-  .card.soon{border-left-color:var(--line); opacity:.85}
-  .card.soon .cta{color:var(--muted)}
+  @media (prefers-reduced-motion: no-preference){
+    .art .float{animation:bob 4.5s ease-in-out infinite}
+    .art .f2{animation-delay:-1.4s} .art .f3{animation-delay:-2.6s}
+    @keyframes bob{0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)}}
+  }
 
-  footer{padding:36px 0 72px; color:var(--muted); font-size:.9rem; border-top:1px solid var(--line); margin-top:24px}
+  /* sections */
+  section{padding:clamp(56px,8vh,96px) 0; border-top:1px solid var(--line)}
+  .sec-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:12px 28px; margin-bottom:40px}
+  .sec-head h2{font-size:clamp(2rem,4.4vw,3.4rem); line-height:1}
+  .sec-head p{margin:0; color:var(--muted); font-size:1.05rem}
 
-  @media (max-width:640px){
+  /* work */
+  .work-grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px}
+  .proj{--c:var(--ink); --c-soft:var(--surface); display:flex; flex-direction:column; background:var(--surface);
+    border:1px solid var(--line); border-radius:8px; overflow:hidden; transition:border-color .18s, transform .18s}
+  .proj.hd{--c:var(--hd); --c-soft:var(--hd-soft)} .proj.po{--c:var(--po); --c-soft:var(--po-soft)} .proj.cf{--c:var(--cf); --c-soft:var(--cf-soft)}
+  .proj:hover{border-color:var(--c); transform:translateY(-3px)}
+  .proj .pic{background:var(--c-soft); border-bottom:1px solid var(--line); padding:22px 22px 0}
+  .proj .pic svg{width:100%; height:auto}
+  .proj .body{padding:20px 22px 22px; display:flex; flex-direction:column; flex:1}
+  .proj .stat{display:inline-flex; align-items:center; gap:8px; font-size:.8rem; color:var(--muted); margin-bottom:10px}
+  .proj .stat::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--c)}
+  .proj h3{font-size:clamp(1.35rem,1.8vw,1.6rem); line-height:1.12; margin-bottom:8px; text-wrap:balance}
+  .proj p{margin:0 0 18px; color:var(--muted); font-size:.98rem}
+  .proj .tools{margin:auto 0 16px; font-size:.82rem; color:var(--muted)}
+  .proj .go{font-weight:600; color:var(--c); font-size:.95rem; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:5px}
+
+  /* about */
+  .about{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:36px clamp(32px,6vw,96px); align-items:start}
+  .about .say{font-family:var(--display); font-size:clamp(1.4rem,2.4vw,2rem); font-weight:500; line-height:1.25; letter-spacing:-.015em; margin:0 0 22px; max-width:22ch}
+  .about .fact{margin:0; color:var(--muted); font-size:1rem}
+  .kit{display:grid; grid-template-columns:1fr 1fr; gap:22px 28px}
+  .kit h3{font-size:.95rem; margin-bottom:8px}
+  .kit ul{list-style:none; margin:0; padding:0; font-size:.93rem; color:var(--muted); line-height:1.7}
+
+  /* contact */
+  .contact .big{display:inline-block; font-family:var(--display); font-weight:700; letter-spacing:-.03em;
+    font-size:clamp(1.6rem,5vw,4.2rem); line-height:1.05; word-break:break-word;
+    text-decoration:underline; text-decoration-thickness:.06em; text-underline-offset:.14em; text-decoration-color:var(--line); transition:text-decoration-color .18s}
+  .contact .big:hover{text-decoration-color:var(--ink)}
+  .contact .links{display:flex; flex-wrap:wrap; gap:14px 34px; margin-top:30px; font-size:1.05rem}
+  .contact .links a{border-bottom:2px solid var(--line); padding-bottom:2px}
+  .contact .links a:hover{border-bottom-color:var(--ink)}
+
+  footer{padding:26px 0 44px; border-top:1px solid var(--line); color:var(--muted); font-size:.88rem}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px}
+
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr; min-height:auto}
+    .hero .art{justify-self:start; max-width:520px}
+    .work-grid,.about{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
     body{font-size:16px}
-    h1{font-size:1.8rem}
-    header.hero{padding:52px 0 34px}
-    .card{padding:22px 20px}
+    .nav ul{gap:18px; font-size:.9rem}
+    .kit{grid-template-columns:1fr 1fr; gap:18px}
   }
 </style>
 </head>
 <body>
 
-<header class="hero">
+<nav class="nav" aria-label="Site">
   <div class="wrap">
-    <p class="eyebrow">Portfolio · Automation &amp; Operations</p>
-    <h1>Operations systems I've designed and built.</h1>
-    <p class="lede">I turn manual, error-prone back-office work into reliable one-click systems — scoping the problem, designing the data model, building the automation, and documenting it for handover. Here are a few, each written up as a short case study.</p>
+    <a class="name" href="#top">Nguyen Ai Ngoc</a>
+    <ul><li><a href="#work">Work</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul>
   </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <div>
+    <h1>Operations, automated. <span class="soft">By one person,</span> end to end.</h1>
+    <p class="lede">Hiring, client documents and cash flow — turned into one-click tools on Google Workspace.</p>
+    <p class="who"><b>Nguyen Ai Ngoc</b><span>Business Operations &amp; HR · Ho Chi Minh City</span></p>
+  </div>
+
+  <svg class="art" viewBox="0 0 600 400" role="img" aria-label="Isometric illustration: three systems standing on one platform — hiring, client documents and cash flow — with a one-click key in front">
+    <ellipse class="shd-big" cx="300.0" cy="255.0" rx="175" ry="92"/>
+    <polygon class="f-l slab" points="73.1,249.0 300.0,380.0 300.0,394.0 73.1,263.0"/>
+    <polygon class="f-r slab" points="526.9,249.0 300.0,380.0 300.0,394.0 526.9,263.0"/>
+    <polygon class="f-t slab" points="300.0,118.0 526.9,249.0 300.0,380.0 73.1,249.0"/>
+    <path class="grid" d="M343.3,143.0 L116.4,274.0"/>
+    <path class="grid" d="M256.7,143.0 L483.6,274.0"/>
+    <path class="grid" d="M386.6,168.0 L159.7,299.0"/>
+    <path class="grid" d="M213.4,168.0 L440.3,299.0"/>
+    <path class="grid" d="M429.9,193.0 L203.0,324.0"/>
+    <path class="grid" d="M170.1,193.0 L397.0,324.0"/>
+    <path class="grid" d="M473.2,218.0 L246.3,349.0"/>
+    <path class="grid" d="M126.8,218.0 L353.7,349.0"/>
+    <path class="flow" d="M267.1,205.0 L244.6,218.0 L274.9,235.5 L257.6,245.5"/>
+    <path class="flow" d="M371.0,265.0 L348.5,278.0 L274.9,235.5"/>
+    <ellipse class="shd" cx="300.0" cy="186.0" rx="51" ry="30"/>
+    <ellipse class="shd" cx="403.9" cy="246.0" rx="51" ry="30"/>
+    <ellipse class="shd" cx="227.3" cy="263.0" rx="61" ry="28"/>
+    <ellipse class="shd" cx="305.2" cy="335.0" rx="44" ry="22"/>
+    <polygon class="f-l hd" points="234.2,122.0 300.0,160.0 300.0,224.0 234.2,186.0"/>
+    <polygon class="f-r hd" points="365.8,122.0 300.0,160.0 300.0,224.0 365.8,186.0"/>
+    <polygon class="f-t hd" points="300.0,84.0 365.8,122.0 300.0,160.0 234.2,122.0"/>
+    <polygon class="glyph-face" points="300.0,100.5 336.4,121.5 300.0,142.5 263.6,121.5"/>
+    <path class="glyph" d="M300.0,100.4 L336.4,121.4"/>
+    <path class="glyph" d="M336.4,121.4 L300.0,142.4"/>
+    <path class="glyph" d="M300.0,142.4 L263.6,121.4"/>
+    <path class="glyph" d="M263.6,121.4 L300.0,100.4"/>
+    <path class="glyph" d="M300.0,100.4 L300.0,121.4 L336.4,121.4"/>
+    <ellipse class="shd-soft" cx="306.9" cy="121.0" rx="22" ry="12"/>
+    <g class="float f1">
+    <polygon class="card-face" points="293.1,71.0 329.4,92.0 306.9,105.0 270.6,84.0"/>
+    <path class="card-edge" d="M293.1,71.0 L329.4,92.0"/>
+    <circle class="dot-hd" cx="290.5" cy="82.5" r="4.2"/>
+    <path class="card-ln" d="M300.9,85.5 L315.6,94.0"/>
+    <path class="card-ln" d="M293.9,89.5 L303.5,95.0"/>
+    <polygon class="card-face" points="305.2,60.0 341.6,81.0 319.1,94.0 282.7,73.0"/>
+    <path class="card-edge" d="M305.2,60.0 L341.6,81.0"/>
+    <circle class="dot-hd" cx="302.6" cy="71.5" r="4.2"/>
+    <path class="card-ln" d="M313.0,74.5 L327.7,83.0"/>
+    <path class="card-ln" d="M306.1,78.5 L315.6,84.0"/>
+    <polygon class="card-face" points="317.3,49.0 353.7,70.0 331.2,83.0 294.8,62.0"/>
+    <path class="card-edge" d="M317.3,49.0 L353.7,70.0"/>
+    <circle class="dot-hd" cx="314.7" cy="60.5" r="4.2"/>
+    <path class="card-ln" d="M325.1,63.5 L339.8,72.0"/>
+    <path class="card-ln" d="M318.2,67.5 L327.7,73.0"/>
+    </g>
+    <polygon class="f-l po" points="338.1,158.0 403.9,196.0 403.9,284.0 338.1,246.0"/>
+    <polygon class="f-r po" points="469.7,158.0 403.9,196.0 403.9,284.0 469.7,246.0"/>
+    <polygon class="f-t po" points="403.9,120.0 469.7,158.0 403.9,196.0 338.1,158.0"/>
+    <polygon class="glyph-face" points="398.7,137.5 428.2,154.5 391.8,175.5 362.4,158.5"/>
+    <path class="glyph" d="M393.7,146.3 L412.8,157.3"/>
+    <path class="glyph" d="M385.7,150.9 L404.8,161.9"/>
+    <path class="glyph" d="M377.7,155.5 L396.8,166.5"/>
+    <polygon class="glyph-face" points="410.8,134.5 440.3,151.5 403.9,172.5 374.5,155.5"/>
+    <path class="glyph" d="M405.9,143.3 L424.9,154.3"/>
+    <path class="glyph" d="M397.9,147.9 L416.9,158.9"/>
+    <path class="glyph" d="M389.9,152.5 L408.9,163.5"/>
+    <ellipse class="shd-soft" cx="403.9" cy="154.0" rx="13" ry="7"/>
+    <g class="float f2">
+    <circle class="dot-po" cx="403.9" cy="118.0" r="13"/>
+    <path class="check" d="M397.9,118.0 l4,4 l8,-9"/>
+    </g>
+    <polygon class="f-l cf" points="158.0,218.0 235.9,263.0 235.9,303.0 158.0,258.0"/>
+    <polygon class="f-r cf" points="296.5,228.0 235.9,263.0 235.9,303.0 296.5,268.0"/>
+    <polygon class="f-t cf" points="218.6,183.0 296.5,228.0 235.9,263.0 158.0,218.0"/>
+    <polygon class="glyph-face" points="218.6,191.5 280.9,227.5 235.9,253.5 173.6,217.5"/>
+    <polygon class="f-l bar" points="193.5,195.5 199.5,199.0 199.5,213.0 193.5,209.5"/>
+    <polygon class="f-r bar" points="211.7,192.0 199.5,199.0 199.5,213.0 211.7,206.0"/>
+    <polygon class="f-t bar" points="205.6,188.5 211.7,192.0 199.5,199.0 193.5,195.5"/>
+    <polygon class="f-l bar" points="203.9,191.5 209.9,195.0 209.9,219.0 203.9,215.5"/>
+    <polygon class="f-r bar" points="222.1,188.0 209.9,195.0 209.9,219.0 222.1,212.0"/>
+    <polygon class="f-t bar" points="216.0,184.5 222.1,188.0 209.9,195.0 203.9,191.5"/>
+    <polygon class="f-l bar" points="214.3,211.5 220.3,215.0 220.3,225.0 214.3,221.5"/>
+    <polygon class="f-r bar" points="232.5,208.0 220.3,215.0 220.3,225.0 232.5,218.0"/>
+    <polygon class="f-t bar" points="226.4,204.5 232.5,208.0 220.3,215.0 214.3,211.5"/>
+    <polygon class="f-l bar-neg" points="224.7,227.5 230.7,231.0 230.7,243.0 224.7,239.5"/>
+    <polygon class="f-r bar-neg" points="242.8,224.0 230.7,231.0 230.7,243.0 242.8,236.0"/>
+    <polygon class="f-t bar-neg" points="236.8,220.5 242.8,224.0 230.7,231.0 224.7,227.5"/>
+    <polygon class="f-l bar" points="235.1,215.5 241.1,219.0 241.1,237.0 235.1,233.5"/>
+    <polygon class="f-r bar" points="253.2,212.0 241.1,219.0 241.1,237.0 253.2,230.0"/>
+    <polygon class="f-t bar" points="247.2,208.5 253.2,212.0 241.1,219.0 235.1,215.5"/>
+    <polygon class="f-l bar" points="245.4,211.5 251.5,215.0 251.5,243.0 245.4,239.5"/>
+    <polygon class="f-r bar" points="263.6,208.0 251.5,215.0 251.5,243.0 263.6,236.0"/>
+    <polygon class="f-t bar" points="257.6,204.5 263.6,208.0 251.5,215.0 245.4,211.5"/>
+    <g class="float f3"><path class="pole" d="M233.8,225.8 v-46"/><path class="flag" d="M233.8,179.8 l18,7 l-18,7 z"/></g>
+    <polygon class="f-l btn" points="259.3,300.5 321.6,336.5 321.6,347.5 259.3,311.5"/>
+    <polygon class="f-r btn" points="351.1,319.5 321.6,336.5 321.6,347.5 351.1,330.5"/>
+    <polygon class="f-t btn" points="288.7,283.5 351.1,319.5 321.6,336.5 259.3,300.5"/>
+    <path class="cursor" d="M305.2,298.0 l0,20 l5,-5 l4,9 l4,-2 l-4,-9 l7,0 z"/>
+  </svg>
+
+  <div class="tri" aria-hidden="true"><i class="hd"></i><i class="po"></i><i class="cf"></i></div>
 </header>
 
 <main>
-  <div class="wrap">
-    <p class="sec-label">Case studies</p>
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head"><h2>Case studies</h2><p>Sanitized demo data throughout.</p></div>
 
-    <a class="card hiredesk" href="hiredesk.html">
-      <div class="top">
-        <span class="ic">💼</span>
-        <h2>HireDesk — Recruitment Automation</h2>
-        <span class="status live">Live</span>
-      </div>
-      <p class="role">Project owner — design, architecture, build &amp; delivery</p>
-      <p>An end-to-end recruitment system that carries a role from <b>"we need to hire" to a signed probation contract</b> — kickoff, CV intake, every candidate email, offers, and bilingual contracts — built entirely on Google Workspace + Slack, with no paid tools. A two-store architecture lets every new role inherit the full automation for free.</p>
-      <div class="chips">
-        <span class="chip">Google Apps Script</span>
-        <span class="chip">Sheets</span>
-        <span class="chip">Gmail</span>
-        <span class="chip">Drive &amp; Docs</span>
-        <span class="chip">Calendar</span>
-        <span class="chip">Slack</span>
-      </div>
-      <span class="cta">View case study →</span>
-    </a>
+      <div class="work-grid">
+        <a class="proj hd" href="hiredesk.html">
+          <div class="pic">
+            <!-- candidates in, signed contract out -->
+            <svg viewBox="0 0 320 150" role="img" aria-label="Candidate cards moving toward a signed contract">
+              <g class="card">
+                <rect x="16" y="52" width="46" height="60" rx="6"/><rect x="42" y="42" width="46" height="60" rx="6"/><rect x="68" y="32" width="46" height="60" rx="6"/>
+              </g>
+              <g class="acc"><circle cx="39" cy="70" r="6"/><circle cx="65" cy="60" r="6"/><circle cx="91" cy="50" r="6"/></g>
+              <g fill="currentColor" opacity=".35"><rect x="27" y="86" width="24" height="4" rx="2"/><rect x="53" y="76" width="24" height="4" rx="2"/><rect x="79" y="66" width="24" height="4" rx="2"/></g>
+              <path class="ln" d="M126 72h50" stroke-dasharray="5 5"/>
+              <path class="ln" d="M170 66l8 6-8 6"/>
+              <rect class="card" x="204" y="30" width="96" height="100" rx="8"/>
+              <path class="ln" d="M218 50h68M218 64h68M218 78h44"/>
+              <path class="acc-ln" d="M222 108c10-14 22-16 34-6s22 4 30-8" />
+              <circle class="acc" cx="286" cy="112" r="9"/>
+              <path d="M281 112l4 4 7-8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="body">
+            <span class="stat">Live</span>
+            <h3>HireDesk — recruitment automation</h3>
+            <p>From "we need to hire" to a signed contract, without paid tools.</p>
+            <div class="tools">Apps Script · Sheets · Gmail · Docs · Calendar · Slack</div>
+            <span class="go">Read the case study</span>
+          </div>
+        </a>
 
-    <a class="card pocm" href="pocm.html">
-      <div class="top">
-        <span class="ic">📄</span>
-        <h2>Document Automation — PO &amp; Completion Minutes</h2>
-        <span class="status live">Live</span>
-      </div>
-      <p class="role">Project owner — design, build &amp; delivery</p>
-      <p>One-click generation of <b>bilingual client contracts</b> — Purchase Orders and Completion Minutes — from a single source-of-truth workbook. Derives every financial figure from one dataset and files each order in its own Drive folder, cutting <b>25–50 minutes of manual prep per order to a single click</b>.</p>
-      <div class="chips">
-        <span class="chip">Google Sheets</span>
-        <span class="chip">Google Apps Script</span>
-        <span class="chip">Docs API</span>
-        <span class="chip">Drive API</span>
-      </div>
-      <span class="cta">View case study →</span>
-    </a>
+        <a class="proj po" href="pocm.html">
+          <div class="pic">
+            <!-- one table, one click, two documents -->
+            <svg viewBox="0 0 320 150" role="img" aria-label="One spreadsheet row generating two bilingual documents">
+              <rect class="card" x="16" y="34" width="120" height="82" rx="6"/>
+              <g class="thin"><line x1="16" y1="56" x2="136" y2="56"/><line x1="16" y1="76" x2="136" y2="76"/><line x1="16" y1="96" x2="136" y2="96"/><line x1="56" y1="34" x2="56" y2="116"/><line x1="96" y1="34" x2="96" y2="116"/></g>
+              <rect class="soft" x="17" y="77" width="118" height="19"/>
+              <g class="acc"><rect x="24" y="84" width="24" height="5" rx="2.5"/><rect x="64" y="84" width="24" height="5" rx="2.5"/><rect x="104" y="84" width="24" height="5" rx="2.5"/></g>
+              <path class="ln" d="M148 76h34" stroke-dasharray="5 5"/><path class="ln" d="M178 70l8 6-8 6"/>
+              <rect class="card" x="204" y="46" width="72" height="90" rx="6"/>
+              <rect class="card" x="228" y="24" width="72" height="90" rx="6"/>
+              <path class="ln" d="M240 42h48M240 56h48M240 70h30"/>
+              <path class="acc-ln" d="M240 96h24" />
+              <text x="270" y="102" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="12" font-weight="700" fill="currentColor">EN</text>
+              <text x="212" y="126" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="12" font-weight="700" fill="currentColor">VN</text>
+            </svg>
+          </div>
+          <div class="body">
+            <span class="stat">Live</span>
+            <h3>Document automation — POs &amp; Completion Minutes</h3>
+            <p>Bilingual client documents in one click. 25–50 minutes per order, gone.</p>
+            <div class="tools">Sheets · Apps Script · Docs API · Drive API</div>
+            <span class="go">Read the case study</span>
+          </div>
+        </a>
 
-    <a class="card cashflow" href="cashflow.html">
-      <div class="top">
-        <span class="ic">📊</span>
-        <h2>Cash Flow Forecast Automation</h2>
-        <span class="status live">Built · in validation</span>
+        <a class="proj cf" href="cashflow.html">
+          <div class="pic">
+            <!-- weekly balance line with one week below zero -->
+            <svg viewBox="0 0 320 150" role="img" aria-label="A weekly cash balance chart with one week dipping below zero">
+              <line class="thin" x1="20" y1="96" x2="300" y2="96"/>
+              <g class="thin"><line x1="52" y1="28" x2="52" y2="130"/><line x1="100" y1="28" x2="100" y2="130"/><line x1="148" y1="28" x2="148" y2="130"/><line x1="196" y1="28" x2="196" y2="130"/><line x1="244" y1="28" x2="244" y2="130"/><line x1="292" y1="28" x2="292" y2="130"/></g>
+              <path class="ln" d="M28 62L52 56 76 70 100 60 124 74 148 66"/>
+              <path class="ln" d="M148 66L172 88 196 112 220 84 244 58 268 66 292 50" stroke-dasharray="4 4"/>
+              <path class="acc-ln" d="M172 88L196 112 220 84" />
+              <circle class="acc" cx="196" cy="112" r="7"/>
+              <rect class="acc" x="184" y="122" width="24" height="12" rx="3"/>
+              <text x="196" y="131" text-anchor="middle" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="9" font-weight="700" fill="#fff">wk 21</text>
+              <text x="24" y="52" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="11" fill="currentColor" opacity=".55">confirmed</text>
+              <text x="230" y="44" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="11" fill="currentColor" opacity=".55">forecast</text>
+            </svg>
+          </div>
+          <div class="body">
+            <span class="stat">Built, in validation</span>
+            <h3>Cash flow forecast automation</h3>
+            <p>A weekly, multi-year cash view that shows the week the balance dips.</p>
+            <div class="tools">Sheets · Apps Script · IMPORTRANGE · multi-file</div>
+            <span class="go">Read the case study</span>
+          </div>
+        </a>
       </div>
-      <p class="role">Project owner — scoping, design, build &amp; handover</p>
-      <p>A live <b>weekly cash-flow forecast</b> that pulls booked deals, confirmed receipts, recurring expenses and project payouts straight from the files teams already keep — nobody retypes a number. Moved the company from a <b>hand-typed monthly sheet to a weekly, multi-year view</b> that shows the week the balance dips, with confirmed receipts reconciled against estimates automatically.</p>
-      <div class="chips">
-        <span class="chip">Google Sheets</span>
-        <span class="chip">Google Apps Script</span>
-        <span class="chip">IMPORTRANGE</span>
-        <span class="chip">Multi-file architecture</span>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head"><h2>About</h2></div>
+      <div class="about">
+        <div>
+          <p class="say">Operations and HR by role. Systems builder by habit.</p>
+          <p class="fact">I own each build end to end — scope, data model, code, user guide, handover — then let it run without me. Vietnamese and English; AI-assisted where it speeds things up.</p>
+        </div>
+        <div class="kit">
+          <div><h3>Build</h3><ul><li>Google Apps Script</li><li>Sheets · Docs · Drive API</li><li>Gmail · Calendar</li><li>Slack bots</li></ul></div>
+          <div><h3>Run</h3><ul><li>Recruitment &amp; onboarding</li><li>Contracts, POs, quotations</li><li>Payments &amp; invoicing</li><li>Budgets &amp; vendors</li></ul></div>
+          <div><h3>Method</h3><ul><li>Scoping</li><li>Single source of truth</li><li>Documentation &amp; handover</li></ul></div>
+          <div><h3>Languages</h3><ul><li>Vietnamese</li><li>English — IELTS 7.0</li><li>Chinese — HSK 2</li></ul></div>
+        </div>
       </div>
-      <span class="cta">View case study →</span>
-    </a>
-  </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="sec-head"><h2>Contact</h2></div>
+      <a class="big" href="mailto:na.ngoc315@gmail.com">na.ngoc315@gmail.com</a>
+      <div class="links">
+        <!-- TODO: replace # with your LinkedIn profile URL -->
+        <a href="#" rel="me">LinkedIn</a>
+        <a href="https://github.com/audreasisy" rel="me">GitHub</a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    Built and maintained by the systems' owner · case studies use sanitized demo data only.
-  </div>
+  <div class="wrap"><span>Nguyen Ai Ngoc</span><span>Demos use sanitized data only.</span></div>
 </footer>
 
 </body>
